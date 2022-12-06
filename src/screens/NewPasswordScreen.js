@@ -4,13 +4,12 @@ import Logo from "../../assets/images/RP-Logo.png";
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
+import { useForm } from 'react-hook-form';
 
 const NewPasswordScreen = () => {
-    const [code, setCode] = useState('');
-    const [newPassword, setNewPassword] = useState('');
     const { height } = useWindowDimensions();
     const navigation = useNavigation();
-
+    const { control, handleSubmit } = useForm();
     const onSubmitPressed = () => {
         console.warn("Password Reset Successfully");
         navigation.navigate('Home');
@@ -28,19 +27,37 @@ const NewPasswordScreen = () => {
                 />
                 <Text style={styles.title}>Reset Your Password</Text>
                 <CustomInput
-                    value={code}
-                    setValue={setCode}
+                    name="code"
+                    control={control}
                     placeholder="Code Sent to Your Email"
+                    rules={{
+                        required: "Username is required",
+                        minLength: {
+                            value: 3,
+                            message: "Username should be minimum 3 characters long",
+                        },
+                        maxLength: {
+                            value: 24,
+                            message: "Username should be maximum 24 characters long",
+                        }
+                    }}
                 />
                 <CustomInput
-                    value={newPassword}
-                    setValue={setNewPassword}
+                    name="password"
+                    control={control}
                     placeholder="New Password"
                     secureTextEntry={true}
+                    rules={{
+                        required: "Password is required",
+                        minLength: {
+                            value: 8,
+                            message: "Password should be minimum 8 characters long",
+                        }
+                    }}
                 />
                 <CustomButton
                     text="Submit"
-                    onPress={onSubmitPressed}
+                    onPress={handleSubmit(onSubmitPressed)}
                 />
                 <CustomButton
                     text="Back to Sign In"

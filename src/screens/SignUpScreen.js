@@ -5,16 +5,25 @@ import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import SocialSignInButtons from '../components/SocialSignInButtons';
 import { useNavigation } from '@react-navigation/native';
+import { useForm } from 'react-hook-form';
+
+const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 
 const SignUpScreen = () => {
-    const [userName, setUserName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
     const { height } = useWindowDimensions();
     const navigation = useNavigation();
+    const { control, handleSubmit, watch } = useForm({
+        defaultValues: {
+            username: "test12345",
+            email: "test12345@gmail.com",
+            password: "12345678",
+            confirm_password: "12345678"
+        }
+    });
+    const pwd = watch('password');
 
-    const onSignUpPressed = () => {
+    const onSignUpPressed = (data) => {
+        console.log(data);
         navigation.navigate('ConfirmEmail');
     };
     const onTermsOfUsePressed = () => {
@@ -36,30 +45,59 @@ const SignUpScreen = () => {
                 />
                 <Text style={styles.title}>Create Account</Text>
                 <CustomInput
-                    value={userName}
-                    setValue={setUserName}
+                    name="username"
+                    control={control}
                     placeholder="Username"
+                    rules={{
+                        required: "Username is required",
+                        minLength: {
+                            value: 3,
+                            message: "Username should be minimum 3 characters long",
+                        },
+                        maxLength: {
+                            value: 24,
+                            message: "Username should be maximum 24 characters long",
+                        }
+                    }}
                 />
                 <CustomInput
-                    value={email}
-                    setValue={setEmail}
+                    name="email"
+                    control={control}
                     placeholder="Email"
+                    rules={{
+                        required: "Email is required",
+                        pattern: {
+                            value: EMAIL_REGEX,
+                            message: "Please enter a valid email"
+                        }
+                    }}
                 />
                 <CustomInput
-                    value={password}
-                    setValue={setPassword}
+                    name="password"
+                    control={control}
                     placeholder="Password"
                     secureTextEntry={true}
+                    rules={{
+                        required: "Password is required",
+                        minLength: {
+                            value: 8,
+                            message: "Password should be minimum 8 characters long",
+                        }
+                    }}
                 />
                 <CustomInput
-                    value={confirmPassword}
-                    setValue={setConfirmPassword}
+                    name="confirm_password"
+                    control={control}
                     placeholder="Confirm Password"
                     secureTextEntry={true}
+                    rules={{
+                        required: "Password is required",
+                        validate: value => value == pwd || "Password do not match"
+                    }}
                 />
                 <CustomButton
                     text="Sign Up"
-                    onPress={onSignUpPressed}
+                    onPress={handleSubmit(onSignUpPressed)}
                 />
                 <View style={styles.textContainer}>
                     <Text style={styles.text}>By registering, you confirm that you accept our

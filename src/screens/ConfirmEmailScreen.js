@@ -4,12 +4,15 @@ import Logo from "../../assets/images/RP-Logo.png";
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
+import { useForm } from 'react-hook-form';
 
 const ConfirmEmailScreen = () => {
-    const [code, setCode] = useState('');
     const { height } = useWindowDimensions();
     const navigation = useNavigation();
-    const onConfirmPressed = () => {
+    const { control, handleSubmit } = useForm()
+
+    const onConfirmPressed = (data) => {
+        console.warn(data);
         navigation.navigate('Home');
     };
     const onResendPressed = () => {
@@ -28,13 +31,14 @@ const ConfirmEmailScreen = () => {
                 />
                 <Text style={styles.title}>Confirm Your Email</Text>
                 <CustomInput
-                    value={code}
-                    setValue={setCode}
+                    name="code"
+                    control={control}
                     placeholder="Enter your confirmation code"
+                    rules={{ required: "Confirmation code is required" }}
                 />
                 <CustomButton
                     text="Confirm"
-                    onPress={onConfirmPressed}
+                    onPress={handleSubmit(onConfirmPressed)}
                 />
                 <CustomButton
                     text="Resend Code"
