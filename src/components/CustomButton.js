@@ -45,7 +45,6 @@ const styles = StyleSheet.create({
     text: {
         color: 'white',
         fontSize: 16,
-        fontWeight: 'bold',
     },
     text_SECONDARY: {
         color: '#4c34ec',

@@ -1,13 +1,11 @@
-import { View, Text, Image, StyleSheet, useWindowDimensions, ScrollView } from 'react-native';
-import React, { useState } from 'react';
-import Logo from "../../assets/images/RP-Logo.png";
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import React from 'react';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
 import { useForm } from 'react-hook-form';
 
 const ConfirmEmailScreen = () => {
-    const { height } = useWindowDimensions();
     const navigation = useNavigation();
     const { control, handleSubmit } = useForm()
 
@@ -24,17 +22,22 @@ const ConfirmEmailScreen = () => {
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.root}>
-                <Image
-                    source={Logo}
-                    style={[styles.logo, { height: height * 0.25 }]}
-                    resizeMode="contain"
-                />
-                <Text style={styles.title}>Confirm Your Email</Text>
+                <Text style={styles.title}>Please enter the code below to confirm your email.</Text>
                 <CustomInput
                     name="code"
                     control={control}
-                    placeholder="Enter your confirmation code"
-                    rules={{ required: "Confirmation code is required" }}
+                    placeholder="Enter your email code"
+                    rules={{
+                        required: "Code is required",
+                        minLength: {
+                            value: 6,
+                            message: "Code should be 6 characters long",
+                        },
+                        maxLength: {
+                            value: 6,
+                            message: "Code should be 6 characters long",
+                        }
+                    }}
                 />
                 <CustomButton
                     text="Confirm"
@@ -60,14 +63,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingTop: 20,
     },
-    logo: {
-        width: "60%",
-        maxWidth: 300,
-        maxHeight: 300,
-    },
     title: {
-        fontSize: 26,
-        fontWeight: 'bold',
+        fontSize: 16,
         color: "#4c34ec",
         marginBottom: 12,
     },

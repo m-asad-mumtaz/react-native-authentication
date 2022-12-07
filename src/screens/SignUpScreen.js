@@ -1,16 +1,13 @@
-import { View, Text, Image, StyleSheet, useWindowDimensions, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import React, { useState } from 'react';
-import Logo from "../../assets/images/RP-Logo.png";
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
-import SocialSignInButtons from '../components/SocialSignInButtons';
 import { useNavigation } from '@react-navigation/native';
 import { useForm } from 'react-hook-form';
 
 const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 
 const SignUpScreen = () => {
-    const { height } = useWindowDimensions();
     const navigation = useNavigation();
     const { control, handleSubmit, watch } = useForm({
         defaultValues: {
@@ -38,12 +35,6 @@ const SignUpScreen = () => {
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.root}>
-                <Image
-                    source={Logo}
-                    style={[styles.logo, { height: height * 0.25 }]}
-                    resizeMode="contain"
-                />
-                <Text style={styles.title}>Create Account</Text>
                 <CustomInput
                     name="username"
                     control={control}
@@ -120,17 +111,6 @@ const styles = StyleSheet.create({
     root: {
         alignItems: 'center',
         paddingTop: 20,
-    },
-    logo: {
-        width: "60%",
-        maxWidth: 300,
-        maxHeight: 300,
-    },
-    title: {
-        fontSize: 28,
-        fontWeight: 'bold',
-        color: "#4c34ec",
-        marginBottom: 12,
     },
     textContainer: {
         width: '90%',

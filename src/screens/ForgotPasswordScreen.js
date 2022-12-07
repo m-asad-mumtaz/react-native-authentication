@@ -1,13 +1,11 @@
-import { View, Text, Image, StyleSheet, useWindowDimensions, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import React from 'react';
-import Logo from "../../assets/images/RP-Logo.png";
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
 import { useForm } from 'react-hook-form';
 
 const ForgotPasswordScreen = () => {
-    const { height } = useWindowDimensions();
     const navigation = useNavigation();
     const { control, handleSubmit } = useForm();
     const onSendPressed = (data) => {
@@ -20,12 +18,7 @@ const ForgotPasswordScreen = () => {
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.root}>
-                <Image
-                    source={Logo}
-                    style={[styles.logo, { height: height * 0.25 }]}
-                    resizeMode="contain"
-                />
-                <Text style={styles.title}>Reset Your Password</Text>
+                <Text style={styles.title}>Please provide your username to reset password.</Text>
                 <CustomInput
                     name="username"
                     control={control}
@@ -43,7 +36,7 @@ const ForgotPasswordScreen = () => {
                     }}
                 />
                 <CustomButton
-                    text="Send"
+                    text="Next"
                     onPress={handleSubmit(onSendPressed)}
                 />
                 <CustomButton
@@ -61,13 +54,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingTop: 20,
     },
-    logo: {
-        width: "60%",
-        maxWidth: 300,
-        maxHeight: 300,
-    },
     title: {
-        fontSize: 26,
+        fontSize: 16,
         fontWeight: 'bold',
         color: "#4c34ec",
         marginBottom: 12,

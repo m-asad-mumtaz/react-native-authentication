@@ -1,13 +1,11 @@
-import { View, Text, Image, StyleSheet, useWindowDimensions, ScrollView } from 'react-native';
-import React, { useState } from 'react';
-import Logo from "../../assets/images/RP-Logo.png";
+import { View, Text, StyleSheet, useWindowDimensions, ScrollView } from 'react-native';
+import React from 'react';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
 import { useForm } from 'react-hook-form';
 
 const NewPasswordScreen = () => {
-    const { height } = useWindowDimensions();
     const navigation = useNavigation();
     const { control, handleSubmit } = useForm();
     const onSubmitPressed = () => {
@@ -20,25 +18,20 @@ const NewPasswordScreen = () => {
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.root}>
-                <Image
-                    source={Logo}
-                    style={[styles.logo, { height: height * 0.25 }]}
-                    resizeMode="contain"
-                />
                 <Text style={styles.title}>Reset Your Password</Text>
                 <CustomInput
                     name="code"
                     control={control}
-                    placeholder="Code Sent to Your Email"
+                    placeholder="Enter Code Sent to Your Email"
                     rules={{
-                        required: "Username is required",
+                        required: "Code is required",
                         minLength: {
-                            value: 3,
-                            message: "Username should be minimum 3 characters long",
+                            value: 6,
+                            message: "Code should be 6 characters long",
                         },
                         maxLength: {
-                            value: 24,
-                            message: "Username should be maximum 24 characters long",
+                            value: 6,
+                            message: "Code should be 6 characters long",
                         }
                     }}
                 />
@@ -74,13 +67,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingTop: 20,
     },
-    logo: {
-        width: "60%",
-        maxWidth: 300,
-        maxHeight: 300,
-    },
     title: {
-        fontSize: 26,
+        fontSize: 16,
         fontWeight: 'bold',
         color: "#4c34ec",
         marginBottom: 12,
